@@ -1,0 +1,5 @@
+.quarto/
+.Rproj.user/
+.venv/
+_site/
+shinylive_files/

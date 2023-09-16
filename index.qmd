@@ -1,0 +1,155 @@
+---
+title: "Shinylive and quarto"
+author: "Gordon Shotwell"
+format: 
+  revealjs:
+    incremental: true
+    theme: beige
+editor:
+  render-on-save: true
+---
+
+## What is Shiny for Python?
+
+-   Python web application framework
+-   Infers a computation graph at runtime
+-   Efficiently re-renders components
+-   Build simple apps that can scale
+-   100% Python code
+
+## Shinylive
+
+-   Shiny has a client-server structure
+-   Limits what kinds of apps you're willing to host
+-   What if we could run the server in the browser too?
+-   WebAssembly!
+
+## Superpowers
+
+-   No need to maintain a server
+-   The client has a lot of compute
+-   Host the app on a static site
+-   Extremely cheap
+-   Scales extremely well
+
+## Problems with WebAssembly
+
+-   Not everything works
+    -   Some packages
+    -   Network requests
+    -   File system access
+    -   Database access
+-   You kind of need to know how websites work
+-   I don't really know how websites work
+-   Let's put it all in quarto!
+
+## Shinylive quarto extension
+
+-   Handles all the web stuff for you
+-   Include shiny apps in revealjs presentations
+-   Just another code chunk
+
+## Demo
+
+[Shiny website](https://shinylive.io/py/examples/)
+
+## Shinylive code
+
+```{{shinylive-python}}
+#| standalone: true
+
+from shiny import *
+
+app_ui = ui.page_fluid(
+    ui.input_slider("n", "N", 0, 100, 40),
+    ui.output_text_verbatim("txt"),
+)
+
+def server(input, output, session):
+    @output
+    @render.text
+    def txt():
+        return f"The value of n*2 is {input.n() * 2}"
+
+app = App(app_ui, server)
+
+```
+
+## Great, but what about
+
+-   Formatting?
+-   Including lots of big files?
+-   Many apps?
+-   Terrible git diffs?
+
+## Hacking together another interface
+
+-   I want to store my apps in a folder but run them in shinylive
+    -   Better dev experience
+    -   Let people run apps in VS Code
+    -   Handles lots of apps
+-   I don't want to modify the shinylive code at all
+
+## How does quarto actually work
+
+![](https://www.jumpingrivers.com/blog/quarto-for-python-users/quarto-diagram.png)
+
+## Strategy
+
+-   Read the files
+-   Create the right markdown chunk
+-   Profit!
+
+## Start simple
+
+```{python}
+#| echo: true
+print("**Some bold text**")
+```
+
+## What's going wrong?
+
+![](https://www.jumpingrivers.com/blog/quarto-for-python-users/quarto-diagram.png)
+
+## Output asis
+
+-   By default code output is escaped
+-   If you want raw md you can use `#| output:asis`
+-   This lets you programatically modify markdown
+-   Which means we can control the destination format
+
+## Start simple
+
+```{{python}}
+# | output: asis
+print("**Some bold text**")
+```
+
+```{python}
+# | output: asis
+print("**Some bold text**")
+```
+
+## We can generate anything
+```{{python}}
+# | output: asis
+titles = ["It's me", "Hi,", "I'm the problem", "It's me"]
+[print(f"## {title}" for title in titles)]
+```
+```{python}
+# | output: asis
+titles = ["It's me", "Hi,", "I'm the problem", "It's me"]
+for title in titles:
+    print(f"## {title}")
+```
+
+## Implications
+- Quarto gives writers programming powers
+- We can automate and extend quarto without Lua
+- I can build my out of control workshop website
+
+## Demo
+
+## Takeaways
+
+![](macmahon_meme.jpeg)
