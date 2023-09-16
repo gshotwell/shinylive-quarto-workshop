@@ -1,0 +1,163 @@
+[
+  {
+    "objectID": "index.html#what-is-shiny-for-python",
+    "href": "index.html#what-is-shiny-for-python",
+    "title": "Shinylive and quarto",
+    "section": "What is Shiny for Python?",
+    "text": "What is Shiny for Python?\n\nPython web application framework\nInfers a computation graph at runtime\nEfficiently re-renders components\nBuild simple apps that can scale\n100% Python code"
+  },
+  {
+    "objectID": "index.html#shinylive",
+    "href": "index.html#shinylive",
+    "title": "Shinylive and quarto",
+    "section": "Shinylive",
+    "text": "Shinylive\n\nShiny has a client-server structure\nLimits what kinds of apps you’re willing to host\nWhat if we could run the server in the browser too?\nWebAssembly!"
+  },
+  {
+    "objectID": "index.html#superpowers",
+    "href": "index.html#superpowers",
+    "title": "Shinylive and quarto",
+    "section": "Superpowers",
+    "text": "Superpowers\n\nNo need to maintain a server\nThe client has a lot of compute\nHost the app on a static site\nExtremely cheap\nScales extremely well"
+  },
+  {
+    "objectID": "index.html#problems-with-webassembly",
+    "href": "index.html#problems-with-webassembly",
+    "title": "Shinylive and quarto",
+    "section": "Problems with WebAssembly",
+    "text": "Problems with WebAssembly\n\nNot everything works\n\nSome packages\nNetwork requests\nFile system access\nDatabase access\n\nYou kind of need to know how websites work\nI don’t really know how websites work\nLet’s put it all in quarto!"
+  },
+  {
+    "objectID": "index.html#shinylive-quarto-extension",
+    "href": "index.html#shinylive-quarto-extension",
+    "title": "Shinylive and quarto",
+    "section": "Shinylive quarto extension",
+    "text": "Shinylive quarto extension\n\nHandles all the web stuff for you\nInclude shiny apps in revealjs presentations\nJust another code chunk"
+  },
+  {
+    "objectID": "index.html#demo",
+    "href": "index.html#demo",
+    "title": "Shinylive and quarto",
+    "section": "Demo",
+    "text": "Demo\nShiny website"
+  },
+  {
+    "objectID": "index.html#shinylive-code",
+    "href": "index.html#shinylive-code",
+    "title": "Shinylive and quarto",
+    "section": "Shinylive code",
+    "text": "Shinylive code\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 40),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def txt():\n        return f\"The value of n*2 is {input.n() * 2}\"\n\napp = App(app_ui, server)"
+  },
+  {
+    "objectID": "index.html#great-but-what-about",
+    "href": "index.html#great-but-what-about",
+    "title": "Shinylive and quarto",
+    "section": "Great, but what about",
+    "text": "Great, but what about\n\nFormatting?\nIncluding lots of big files?\nMany apps?\nTerrible git diffs?"
+  },
+  {
+    "objectID": "index.html#hacking-together-another-interface",
+    "href": "index.html#hacking-together-another-interface",
+    "title": "Shinylive and quarto",
+    "section": "Hacking together another interface",
+    "text": "Hacking together another interface\n\nI want to store my apps in a folder but run them in shinylive\n\nBetter dev experience\nLet people run apps in VS Code\nHandles lots of apps\n\nI don’t want to modify the shinylive code at all"
+  },
+  {
+    "objectID": "index.html#how-does-quarto-actually-work",
+    "href": "index.html#how-does-quarto-actually-work",
+    "title": "Shinylive and quarto",
+    "section": "How does quarto actually work",
+    "text": "How does quarto actually work"
+  },
+  {
+    "objectID": "index.html#strategy",
+    "href": "index.html#strategy",
+    "title": "Shinylive and quarto",
+    "section": "Strategy",
+    "text": "Strategy\n\nRead the files\nCreate the right markdown chunk\nProfit!"
+  },
+  {
+    "objectID": "index.html#start-simple",
+    "href": "index.html#start-simple",
+    "title": "Shinylive and quarto",
+    "section": "Start simple",
+    "text": "Start simple\n\nprint(\"**Some bold text**\")\n\n**Some bold text**"
+  },
+  {
+    "objectID": "index.html#whats-going-wrong",
+    "href": "index.html#whats-going-wrong",
+    "title": "Shinylive and quarto",
+    "section": "What’s going wrong?",
+    "text": "What’s going wrong?"
+  },
+  {
+    "objectID": "index.html#output-asis",
+    "href": "index.html#output-asis",
+    "title": "Shinylive and quarto",
+    "section": "Output asis",
+    "text": "Output asis\n\nBy default code output is escaped\nIf you want raw md you can use #| output:asis\nThis lets you programatically modify markdown\nWhich means we can control the destination format"
+  },
+  {
+    "objectID": "index.html#start-simple-1",
+    "href": "index.html#start-simple-1",
+    "title": "Shinylive and quarto",
+    "section": "Start simple",
+    "text": "Start simple\n# | output: asis\nprint(\"**Some bold text**\")\nSome bold text"
+  },
+  {
+    "objectID": "index.html#we-can-generate-anything",
+    "href": "index.html#we-can-generate-anything",
+    "title": "Shinylive and quarto",
+    "section": "We can generate anything",
+    "text": "We can generate anything\n# | output: asis\ntitles = [\"It's me\", \"Hi,\", \"I'm the problem\", \"It's me\"]\n[print(f\"## {title}\" for title in titles)]"
+  },
+  {
+    "objectID": "index.html#its-me",
+    "href": "index.html#its-me",
+    "title": "Shinylive and quarto",
+    "section": "It’s me",
+    "text": "It’s me"
+  },
+  {
+    "objectID": "index.html#hi",
+    "href": "index.html#hi",
+    "title": "Shinylive and quarto",
+    "section": "Hi,",
+    "text": "Hi,"
+  },
+  {
+    "objectID": "index.html#im-the-problem",
+    "href": "index.html#im-the-problem",
+    "title": "Shinylive and quarto",
+    "section": "I’m the problem",
+    "text": "I’m the problem"
+  },
+  {
+    "objectID": "index.html#its-me-1",
+    "href": "index.html#its-me-1",
+    "title": "Shinylive and quarto",
+    "section": "It’s me",
+    "text": "It’s me"
+  },
+  {
+    "objectID": "index.html#implications",
+    "href": "index.html#implications",
+    "title": "Shinylive and quarto",
+    "section": "Implications",
+    "text": "Implications\n\nQuarto gives writers programming powers\nWe can automate and extend quarto without Lua\nI can build my out of control workshop website"
+  },
+  {
+    "objectID": "index.html#demo-1",
+    "href": "index.html#demo-1",
+    "title": "Shinylive and quarto",
+    "section": "Demo",
+    "text": "Demo"
+  },
+  {
+    "objectID": "index.html#takeaways",
+    "href": "index.html#takeaways",
+    "title": "Shinylive and quarto",
+    "section": "Takeaways",
+    "text": "Takeaways"
+  }
+]

@@ -1,0 +1,1 @@
+Sitemap: https://GShotwell.github.io/shinylive-quarto-workshop/sitemap.xml
