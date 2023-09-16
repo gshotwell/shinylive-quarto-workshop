@@ -3,3 +3,5 @@
 .venv/
 _site/
 shinylive_files/
+
+/.quarto/
